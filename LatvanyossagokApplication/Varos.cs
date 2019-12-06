@@ -4,9 +4,9 @@
     {
         private int id;
         private string nev;
-        private string lakossag;
+        private int lakossag;
 
-        public Varos(int id, string nev, string lakossag)
+        public Varos(int id, string nev, int lakossag)
         {
             this.id = id;
             this.nev = nev;
@@ -15,7 +15,7 @@
 
         public int Id { get => id; }
         public string Nev { get => nev; set => nev = value; }
-        public string Lakossag { get => lakossag; set => lakossag = value; }
+        public int Lakossag { get => lakossag; set => lakossag = value; }
 
 
 

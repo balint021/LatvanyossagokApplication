@@ -37,20 +37,21 @@
             this.varosBox = new System.Windows.Forms.ListBox();
             this.btn_varosTorol = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.latv_varosBox = new System.Windows.Forms.ListBox();
+            this.num_latvAr = new System.Windows.Forms.NumericUpDown();
+            this.latvLeir = new System.Windows.Forms.TextBox();
+            this.latvNev = new System.Windows.Forms.TextBox();
+            this.btn_LatvAdd = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.btn_LatvAdd = new System.Windows.Forms.Button();
-            this.latvNev = new System.Windows.Forms.TextBox();
-            this.latvLeir = new System.Windows.Forms.TextBox();
-            this.num_latvAr = new System.Windows.Forms.NumericUpDown();
-            this.latv_varosBox = new System.Windows.Forms.ListBox();
             this.latvBox = new System.Windows.Forms.ListBox();
             this.btn_latvDel = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btn_latvUpdate = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.btn_varosUpdate = new System.Windows.Forms.Button();
-            this.btn_latvUpdate = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.num_varosLak)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -76,6 +77,11 @@
             // num_varosLak
             // 
             this.num_varosLak.Location = new System.Drawing.Point(83, 40);
+            this.num_varosLak.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
             this.num_varosLak.Name = "num_varosLak";
             this.num_varosLak.Size = new System.Drawing.Size(100, 20);
             this.num_varosLak.TabIndex = 3;
@@ -151,6 +157,50 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Látványosság Felvétel";
             // 
+            // latv_varosBox
+            // 
+            this.latv_varosBox.FormattingEnabled = true;
+            this.latv_varosBox.Location = new System.Drawing.Point(160, 20);
+            this.latv_varosBox.Name = "latv_varosBox";
+            this.latv_varosBox.Size = new System.Drawing.Size(126, 147);
+            this.latv_varosBox.TabIndex = 7;
+            // 
+            // num_latvAr
+            // 
+            this.num_latvAr.Location = new System.Drawing.Point(53, 72);
+            this.num_latvAr.Maximum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            0});
+            this.num_latvAr.Name = "num_latvAr";
+            this.num_latvAr.Size = new System.Drawing.Size(101, 20);
+            this.num_latvAr.TabIndex = 6;
+            // 
+            // latvLeir
+            // 
+            this.latvLeir.Location = new System.Drawing.Point(54, 45);
+            this.latvLeir.Name = "latvLeir";
+            this.latvLeir.Size = new System.Drawing.Size(100, 20);
+            this.latvLeir.TabIndex = 5;
+            // 
+            // latvNev
+            // 
+            this.latvNev.Location = new System.Drawing.Point(54, 20);
+            this.latvNev.Name = "latvNev";
+            this.latvNev.Size = new System.Drawing.Size(100, 20);
+            this.latvNev.TabIndex = 4;
+            // 
+            // btn_LatvAdd
+            // 
+            this.btn_LatvAdd.Location = new System.Drawing.Point(54, 144);
+            this.btn_LatvAdd.Name = "btn_LatvAdd";
+            this.btn_LatvAdd.Size = new System.Drawing.Size(75, 23);
+            this.btn_LatvAdd.TabIndex = 3;
+            this.btn_LatvAdd.Text = "Felvétel";
+            this.btn_LatvAdd.UseVisualStyleBackColor = true;
+            this.btn_LatvAdd.Click += new System.EventHandler(this.btn_LatvAdd_Click);
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -177,45 +227,6 @@
             this.label1.Size = new System.Drawing.Size(30, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Név:";
-            // 
-            // btn_LatvAdd
-            // 
-            this.btn_LatvAdd.Location = new System.Drawing.Point(54, 144);
-            this.btn_LatvAdd.Name = "btn_LatvAdd";
-            this.btn_LatvAdd.Size = new System.Drawing.Size(75, 23);
-            this.btn_LatvAdd.TabIndex = 3;
-            this.btn_LatvAdd.Text = "Felvétel";
-            this.btn_LatvAdd.UseVisualStyleBackColor = true;
-            this.btn_LatvAdd.Click += new System.EventHandler(this.btn_LatvAdd_Click);
-            // 
-            // latvNev
-            // 
-            this.latvNev.Location = new System.Drawing.Point(54, 20);
-            this.latvNev.Name = "latvNev";
-            this.latvNev.Size = new System.Drawing.Size(100, 20);
-            this.latvNev.TabIndex = 4;
-            // 
-            // latvLeir
-            // 
-            this.latvLeir.Location = new System.Drawing.Point(54, 45);
-            this.latvLeir.Name = "latvLeir";
-            this.latvLeir.Size = new System.Drawing.Size(100, 20);
-            this.latvLeir.TabIndex = 5;
-            // 
-            // num_latvAr
-            // 
-            this.num_latvAr.Location = new System.Drawing.Point(53, 72);
-            this.num_latvAr.Name = "num_latvAr";
-            this.num_latvAr.Size = new System.Drawing.Size(101, 20);
-            this.num_latvAr.TabIndex = 6;
-            // 
-            // latv_varosBox
-            // 
-            this.latv_varosBox.FormattingEnabled = true;
-            this.latv_varosBox.Location = new System.Drawing.Point(160, 20);
-            this.latv_varosBox.Name = "latv_varosBox";
-            this.latv_varosBox.Size = new System.Drawing.Size(126, 147);
-            this.latv_varosBox.TabIndex = 7;
             // 
             // latvBox
             // 
@@ -247,6 +258,16 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Látványosságok";
             // 
+            // btn_latvUpdate
+            // 
+            this.btn_latvUpdate.Location = new System.Drawing.Point(9, 289);
+            this.btn_latvUpdate.Name = "btn_latvUpdate";
+            this.btn_latvUpdate.Size = new System.Drawing.Size(75, 23);
+            this.btn_latvUpdate.TabIndex = 7;
+            this.btn_latvUpdate.Text = "Modosítás";
+            this.btn_latvUpdate.UseVisualStyleBackColor = true;
+            this.btn_latvUpdate.Click += new System.EventHandler(this.btn_latvUpdate_Click);
+            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.btn_varosUpdate);
@@ -269,21 +290,22 @@
             this.btn_varosUpdate.UseVisualStyleBackColor = true;
             this.btn_varosUpdate.Click += new System.EventHandler(this.btn_varosUpdate_Click);
             // 
-            // btn_latvUpdate
+            // button1
             // 
-            this.btn_latvUpdate.Location = new System.Drawing.Point(9, 289);
-            this.btn_latvUpdate.Name = "btn_latvUpdate";
-            this.btn_latvUpdate.Size = new System.Drawing.Size(75, 23);
-            this.btn_latvUpdate.TabIndex = 7;
-            this.btn_latvUpdate.Text = "Modosítás";
-            this.btn_latvUpdate.UseVisualStyleBackColor = true;
-            this.btn_latvUpdate.Click += new System.EventHandler(this.btn_latvUpdate_Click);
+            this.button1.Location = new System.Drawing.Point(665, 359);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "Frissítés";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(884, 477);
+            this.ClientSize = new System.Drawing.Size(751, 394);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -327,6 +349,7 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button btn_latvUpdate;
         private System.Windows.Forms.Button btn_varosUpdate;
+        private System.Windows.Forms.Button button1;
     }
 }
 

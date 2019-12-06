@@ -27,7 +27,8 @@ namespace LatvanyossagokApplication
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                
+                System.Environment.Exit(0);
+
             }
             feladat2();
             AdatokListazasa();
@@ -35,15 +36,17 @@ namespace LatvanyossagokApplication
 
         private void feladat2()
         {
-            var command = conn.CreateCommand();
-            command.CommandText = @"CREATE TABLE IF NOT EXISTS varosok(
+            try
+            {
+                var command = conn.CreateCommand();
+                command.CommandText = @"CREATE TABLE IF NOT EXISTS varosok(
                                         id int PRIMARY KEY AUTO_INCREMENT NOT NULL,
                                         nev varchar(255) UNIQUE NOT NULL,
                                         lakossag int NOT NULL
                                     );";
-            command.ExecuteNonQuery();
+                command.ExecuteNonQuery();
 
-            command.CommandText = @"CREATE TABLE IF NOT EXISTS latvanyossagok(
+                command.CommandText = @"CREATE TABLE IF NOT EXISTS latvanyossagok(
                                         id int PRIMARY KEY AUTO_INCREMENT NOT NULL,
                                         nev varchar(255) NOT NULL,
                                         leiras varchar(255) NOT NULL,
@@ -51,29 +54,45 @@ namespace LatvanyossagokApplication
                                         varos_id int NOT NULL,
                                         FOREIGN KEY (varos_id) REFERENCES varosok(id)
                                     );";
-            command.ExecuteNonQuery();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                System.Environment.Exit(0);
+            }
+            
         }
 
         private void AdatokListazasa()
         {
-            var command = conn.CreateCommand();
-            command.CommandText = @"SELECT id, nev, lakossag FROM varosok";
-            using (var reader = command.ExecuteReader())
+            try
             {
-                varosBox.Items.Clear();
-                latv_varosBox.Items.Clear();
-                while (reader.Read())
+                var command = conn.CreateCommand();
+                command.CommandText = @"SELECT id, nev, lakossag FROM varosok";
+                using (var reader = command.ExecuteReader())
                 {
-                    var id = reader.GetInt32("id");
-                    var nev = reader.GetString("nev");
-                    var lakossag = reader.GetString("lakossag");
+                    varosBox.Items.Clear();
+                    latv_varosBox.Items.Clear();
+                    while (reader.Read())
+                    {
+                        var id = reader.GetInt32("id");
+                        var nev = reader.GetString("nev");
+                        var lakossag = reader.GetInt32("lakossag");
 
-                    var varos = new Varos(id, nev, lakossag);
+                        var varos = new Varos(id, nev, lakossag);
 
-                    varosBox.Items.Add(varos);
-                    latv_varosBox.Items.Add(varos);
+                        varosBox.Items.Add(varos);
+                        latv_varosBox.Items.Add(varos);
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                System.Environment.Exit(0);
+            }
+            
         }
 
         private void btn_varosAdd_Click(object sender, EventArgs e)
@@ -111,15 +130,22 @@ namespace LatvanyossagokApplication
                 MessageBox.Show("Válasszon ki egy elemet a törléshez");
                 return;
             }
-            var cmd = conn.CreateCommand();
-
-            cmd.CommandText = @"DELETE FROM varosok WHERE id = @id";
 
             var varos = (Varos)varosBox.SelectedItem;
 
-            cmd.Parameters.AddWithValue("@id", varos.Id);
+            try
+            {
+                var cmd = conn.CreateCommand();
+                cmd.CommandText = @"DELETE FROM varosok WHERE id = @id";
+                cmd.Parameters.AddWithValue("@id", varos.Id);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Nem törölheted mert van látványossága.");
+            }
 
-            cmd.ExecuteNonQuery();
+            
 
             AdatokListazasa();
         }
@@ -152,38 +178,47 @@ namespace LatvanyossagokApplication
                 MessageBox.Show(ex.Message);
             }
 
-            LatvListaFrissites();
+            if (varosBox.SelectedIndex != -1)
+            {
+                LatvListaFrissites();
+            }
 
         }
 
         private void varosBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+
             latvBox.Items.Clear();
 
-
-            var command = conn.CreateCommand();
-            command.CommandText = @"SELECT id, nev, leiras, ar, varos_id FROM latvanyossagok WHERE varos_id = @id";
-            var varos = (Varos)varosBox.SelectedItem;
-            command.Parameters.AddWithValue("@id", varos.Id);
-
-            using (var reader = command.ExecuteReader())
+            try
             {
-                latvBox.Items.Clear();
-                while (reader.Read())
+                var command = conn.CreateCommand();
+                command.CommandText = @"SELECT id, nev, leiras, ar, varos_id FROM latvanyossagok WHERE varos_id = @id";
+                var varos = (Varos)varosBox.SelectedItem;
+                command.Parameters.AddWithValue("@id", varos.Id);
+
+                using (var reader = command.ExecuteReader())
                 {
-                    var id = reader.GetInt32("id");
-                    var nev = reader.GetString("nev");
-                    var leiras = reader.GetString("leiras");
-                    var ar = reader.GetInt32("ar");
-                    var varos_id = reader.GetInt32("varos_id");
+                    latvBox.Items.Clear();
+                    while (reader.Read())
+                    {
+                        var id = reader.GetInt32("id");
+                        var nev = reader.GetString("nev");
+                        var leiras = reader.GetString("leiras");
+                        var ar = reader.GetInt32("ar");
+                        var varos_id = reader.GetInt32("varos_id");
 
-                    var latv = new Latvanyossag(id, nev, leiras, ar, varos_id);
+                        var latv = new Latvanyossag(id, nev, leiras, ar, varos_id);
 
-                    latvBox.Items.Add(latv);
+                        latvBox.Items.Add(latv);
+                    }
                 }
             }
-
-
+            catch (Exception ex)
+            {
+                
+            }
+            
         }
 
         private void btn_latvDel_Click(object sender, EventArgs e)
@@ -210,38 +245,59 @@ namespace LatvanyossagokApplication
         private void LatvListaFrissites()
         {
             latvBox.Items.Clear();
-
-            var command = conn.CreateCommand();
-            command.CommandText = @"SELECT id, nev, leiras, ar, varos_id FROM latvanyossagok WHERE varos_id = @id";
-            var varos = (Varos)varosBox.SelectedItem;
-            command.Parameters.AddWithValue("@id", varos.Id);
-
-            using (var reader = command.ExecuteReader())
+            try
             {
-                latvBox.Items.Clear();
-                while (reader.Read())
+                var command = conn.CreateCommand();
+                command.CommandText = @"SELECT id, nev, leiras, ar, varos_id FROM latvanyossagok WHERE varos_id = @id";
+                var varos = (Varos)varosBox.SelectedItem;
+                command.Parameters.AddWithValue("@id", varos.Id);
+                using (var reader = command.ExecuteReader())
                 {
-                    var id = reader.GetInt32("id");
-                    var nev = reader.GetString("nev");
-                    var leiras = reader.GetString("leiras");
-                    var ar = reader.GetInt32("ar");
-                    var varos_id = reader.GetInt32("varos_id");
+                    latvBox.Items.Clear();
+                    while (reader.Read())
+                    {
+                        var id = reader.GetInt32("id");
+                        var nev = reader.GetString("nev");
+                        var leiras = reader.GetString("leiras");
+                        var ar = reader.GetInt32("ar");
+                        var varos_id = reader.GetInt32("varos_id");
 
-                    var latv = new Latvanyossag(id, nev, leiras, ar, varos_id);
+                        var latv = new Latvanyossag(id, nev, leiras, ar, varos_id);
 
-                    latvBox.Items.Add(latv);
+                        latvBox.Items.Add(latv);
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
         }
 
         private void btn_varosUpdate_Click(object sender, EventArgs e)
         {
-            
+            if (varosBox.SelectedItem != null)
+            {
+                var varos = (Varos)varosBox.SelectedItem;
+                Form varosModositasForm = new VarosModositasForm(varos.Id, varos.Nev, varos.Lakossag);
+                varosModositasForm.ShowDialog();
+            }   
         }
 
         private void btn_latvUpdate_Click(object sender, EventArgs e)
         {
+            if (latvBox.SelectedItem !=null)
+            {
+                var latv = (Latvanyossag)latvBox.SelectedItem;
+                Form LatvanyossagModositasForm = new LatvanyossagModositasForm(latv.Id, latv.Nev, latv.Leiras, latv.Ar);
+                LatvanyossagModositasForm.ShowDialog();
+            }
+        }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            AdatokListazasa();
         }
     }
 }
